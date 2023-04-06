@@ -28,7 +28,7 @@ exports.convert = async (req, res, next) => {
             },
             fullPage: true,
             landscape: false,
-            printBackground: true
+            printBackground: true,
         };
 
         const page = await browser.newPage();
@@ -48,7 +48,8 @@ exports.convert = async (req, res, next) => {
                 }
             `,
         });
-        await page.setContent(req.body.template, { waitUntil: "networkidle0" });
+        console.log("body.template", req.body.template);
+        await page.setContent(req.body.template, { waitUntil: "domcontentloaded" });
         const buffer = await page.pdf(options);
         await browser.close();
 
