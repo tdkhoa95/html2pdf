@@ -49,7 +49,9 @@ exports.convert = async (req, res, next) => {
             `,
         });
         console.log("body.template", req.body.template);
-        await page.setContent(req.body.template, { waitUntil: "domcontentloaded" });
+        await page.setContent(req.body.template, {
+            waitUntil: "networkidle0",
+        });
         const buffer = await page.pdf(options);
         await browser.close();
 
