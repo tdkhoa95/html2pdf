@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: eztendertw-html2pdf-live
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eztendertw-html2pdf-live
+  template:
+    metadata:
+      labels:
+        app: eztendertw-html2pdf-live
+    spec:
+      nodeSelector:
+        workload: eztender
+      containers:
+        - name: eztendertw-html2pdf-live
+          image: acrfptcluster.azurecr.io/eztendertw-html2pdf-live
+          ports:
+          - containerPort: 3000

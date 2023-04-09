@@ -1,24 +1,32 @@
 {
-  "name": "@chuongtrh/html-to-pdf",
-  "version": "1.0.1",
+  "name": "html2pdf",
+  "version": "1.0.0",
   "description": "Generate a simple invoice PDF from HTML using puppeteer & handlebars",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "chuongtrh",
+  "author": "tdkhoa95 & friends",
   "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/tdkhoa95/html2pdf.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "handlebars": "^4.7.7",
-    "puppeteer": "^19.8.3"
+    "puppeteer": "^19.8.3",
+    "html-to-docx": "^1.8.0",
+    "jszip": "^3.10.1",
+    "cors": "^2.8.5"
   },
   "keywords": [
     "puppeteer",
     "pdf",
     "handlebars",
     "html_to_pdf",
-    "html_2_pdf"
-  ],
-  "repository": "github:chuongtrh/html_to_pdf"
+    "html_2_pdf",
+    "html2pdf"
+  ]
 }
