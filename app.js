@@ -5,13 +5,13 @@ const router = require("./routes/baseRoute");
 const port = 3000;
 const app = express();
 
-// Allow Cross-Origin requests
+// Allow Cross-Origin requests.
 app.use(cors());
 
-// Change accepted type for parsers
+// Deserialize/Serialize JSON requests.
 app.use(express.json());
 
-// Routes
+// Routes.
 app.use("/api/v1", router);
 
 app.listen(port, () => {

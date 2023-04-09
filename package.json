@@ -17,6 +17,8 @@
     "express": "^4.18.2",
     "handlebars": "^4.7.7",
     "puppeteer": "^19.8.3",
+    "html-to-docx": "^1.8.0",
+    "jszip": "^3.10.1",
     "cors": "^2.8.5"
   },
   "keywords": [

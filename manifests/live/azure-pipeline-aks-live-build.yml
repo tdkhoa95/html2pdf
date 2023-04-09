@@ -1,0 +1,61 @@
+trigger:
+  tags:
+    include:
+    - live.*
+
+resources:
+- repo: self
+
+variables:
+  dockerRegistryServiceConnection: 'acrfptcluster'
+  imageRepository: 'eztendertw-html2pdf-live'
+  containerRegistry: 'acrfptcluster.azurecr.io'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  vmImageName: 'ubuntu-latest'
+  envDeployment: 'FPTDEVOPS.eztendertw-prod'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+
+    - upload: manifests
+      artifact: manifests
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: $(envDeployment)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/live/azure-pipeline-aks-live-deploy.yml
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
